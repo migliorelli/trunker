@@ -1,6 +1,6 @@
 {
   "name": "trunker",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A lightweight Express.js middleware to help you implement Trunk Based Development using feature flags.",
   "author": "Miguel Migliorelli Bringhenti",
   "repository": "https://github.com/migliorelli/trunker",
