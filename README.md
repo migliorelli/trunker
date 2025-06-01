@@ -1,5 +1,7 @@
 # Trunker
 
+![Trunker](trunker.png)
+
 A lightweight Express.js middleware to help you implement Trunk Based Development using feature flags. Easily manage and restrict access to routes based on static or dynamic flags, supporting both synchronous and asynchronous evaluation.
 
 ## Features
