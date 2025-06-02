@@ -2,7 +2,7 @@
 
 <img src="trunker.png" alt="Trunker" style="width: 150px; height: 150px" />
 
-A lightweight Express.js middleware to help you implement Trunk Based Development using feature flags. Easily manage and restrict access to routes based on static or dynamic flags, supporting both synchronous and asynchronous evaluation.
+A lightweight Express.js middleware to help you implement feature flags. Easily manage and restrict access to routes based on static or dynamic flags, supporting both synchronous and asynchronous evaluation.
 
 ## Features
 
@@ -125,7 +125,12 @@ You can customize the error response format:
 ```typescript
 const trunker = createTrunker({
   flags: { ... },
-  error: { format: "json", key: "message", statusCode: 403 }, // or { format: "plain" }
+  error: { 
+    format: "json", // required. `json` or `plain` 
+    key: "message",  // optional
+    statusCode: 403, // optional
+    template: "You can't access this route: {{flag}} is disabled" // optional
+  }, 
 });
 ```
 

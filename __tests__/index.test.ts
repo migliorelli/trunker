@@ -209,6 +209,36 @@ describe("Trunker: createTrunker()", () => {
     expect(response.text).toBe(`OK!`);
   });
 
+  it("should RESTRICT access to /test based on target string with CUSTOM ERROR MESSAGE", async () => {
+    const app = express();
+    const trunker = createTrunker({
+      flags: {
+        test: { active: false },
+      },
+      error: {
+        format: "json",
+        template: "You are not allowed to access this route.",
+      },
+    });
+
+    app.use(trunker.middleware());
+
+    app.get(
+      "/test",
+      trunker.restrict("test"),
+      (_req: Request, res: Response) => {
+        res.send("OK!");
+      },
+    );
+
+    const response = await request(app).get("/test");
+
+    expect(response.status).toBe(403);
+    expect(response.body.error).toBe(
+      `You are not allowed to access this route.`,
+    );
+  });
+
   it("should RESTRICT access to /test based on target string", async () => {
     const app = express();
     const trunker = createTrunker({

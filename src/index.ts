@@ -116,13 +116,16 @@ function getErrorResponse(
   flagName: string,
   errorOptions: ErrorOptions | undefined,
 ) {
+  const template = errorOptions?.template ?? "Flag {flag} is not active";
+  const message = template.replace(/\{flag\}/, flagName);
+
   if (errorOptions === undefined || errorOptions.format === "json") {
     return {
-      [errorOptions?.key ?? "error"]: `Flag ${flagName} is not active`,
+      [errorOptions?.key ?? "error"]: message,
     };
   }
 
-  return `Flag ${flagName} is not active`;
+  return message;
 }
 
 /**

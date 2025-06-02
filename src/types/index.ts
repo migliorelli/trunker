@@ -18,12 +18,18 @@ export type Flags = Record<string, Flag>;
  * Error options object.
  *
  * `statusCode` is optional. Defaults to `403`.
+ * 
+ * `template` is optional. Use `{flag}` to define where 
+ * the flagName should be. Defaults to `Flag {flag} is not active`.
  *
  * `format` is required. Can be either `json` or `plain`.
  *
  * `key` is optional and only available if `format=json`. Defaults to `error`.
  */
-export type ErrorOptions = { statusCode?: number } & (
+export type ErrorOptions = {
+  statusCode?: number;
+  template?: string;
+} & (
   | {
       format: "json";
       key?: string;
