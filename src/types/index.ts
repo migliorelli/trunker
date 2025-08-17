@@ -46,13 +46,13 @@ export type ErrorOptions = {
  *
  * `error` is optional.
  */
-export type TrunkerOptions = {
-  flags: Flags;
+export type TrunkerOptions<T extends Flags = Flags> = {
+  flags: T;
   error?: ErrorOptions;
 };
 
-export type Trunker = {
-  options: TrunkerOptions;
+export type Trunker<T extends Flags = Flags> = {
+  options: TrunkerOptions<T>;
   /**
    * Trunker main middleware function that adds the `trunker` property to the request object.
    *
@@ -70,5 +70,5 @@ export type Trunker = {
    *
    * @returns A `Express.RequestHandler` function.
    */
-  restrict: (target: string | string[]) => RequestHandler;
+  restrict: (target: keyof T | (keyof T)[]) => RequestHandler;
 };

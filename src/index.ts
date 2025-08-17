@@ -1,4 +1,4 @@
-import { ErrorOptions, Flag, Trunker, TrunkerOptions } from "@trunker/types";
+import { ErrorOptions, Flag, Flags, Trunker, TrunkerOptions } from "@trunker/types";
 import { Request } from "express";
 
 /**
@@ -7,9 +7,7 @@ import { Request } from "express";
  * @param options The options for the Trunker instance.
  * @returns A new Trunker instance.
  */
-export function createTrunker(options: TrunkerOptions): Trunker {
-  const errorCode = options.error?.statusCode ?? 403;
-
+export function createTrunker<T extends Flags>(options: TrunkerOptions<T>): Trunker<T> {  const errorCode = options.error?.statusCode ?? 403;
   return {
     options,
     middleware() {
@@ -36,11 +34,11 @@ export function createTrunker(options: TrunkerOptions): Trunker {
 
         if (Array.isArray(target)) {
           for (let flagName of target) {
-            const isActive = await isFlagActive(req, flagName);
+            const isActive = await isFlagActive(req, flagName as string);
             if (!isActive) {
               res
                 .status(errorCode)
-                .json(getErrorResponse(flagName, options.error));
+                .json(getErrorResponse(flagName as string, options.error));
               return;
             }
           }
